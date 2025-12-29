@@ -1,31 +1,27 @@
 const { chromium } = require('playwright');
 
 (async () => {
-  // 1. Launch the browser
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
   try {
-    console.log('🌐 Navigating to your website...');
-    // REPLACE with your actual published website URL
-    await page.goto('https://assignmenttwojinhua.great-site.net'); 
+    // WE ADDED THE STRING HERE: '?source=KEEP_ALIVE_SCRIPT'
+    // This string will travel through your logs as part of the request metadata
+    const targetUrl = 'https://assignmenttwojinhua.great-site.net?source=666666666';
+    
+    console.log(`🌐 Navigating to ${targetUrl}...`);
+    await page.goto(targetUrl); 
 
-    // 2. Simulate File Upload
-    // This looks for an <input type="file">. 
-    // We will create a small 'dummy.sql' in the repo to upload.
     console.log('📁 Uploading dummy file...');
     await page.setInputFiles('input[type="file"]', 'dummy.sql');
 
-    // 3. Click the Submit/Grade Button
-    // Replace 'Submit' with the actual text on your button
     console.log('🖱️ Clicking the button...');
     await page.click('text=Grade Assignment'); 
 
-    // 4. Wait for a few seconds to let the Edge Function finish
     console.log('⏳ Waiting for process to complete...');
     await page.waitForTimeout(10000); 
 
-    console.log('✅ UI Action Successful! Project stack is fully active.');
+    console.log('✅ UI Action Successful! Search your logs for "KEEP_ALIVE_SCRIPT"');
   } catch (error) {
     console.error('❌ UI Action Failed:', error);
     process.exit(1);
